@@ -14,21 +14,20 @@ public class CarGrid : MonoBehaviour
     private GameObject slotPrefab;
     private Transform[,] slots;
 
-    public Transform this[Vector2Int coordinate] => this[coordinate.x, coordinate.y];
-    public Transform this[int x, int y] => slots[x, y];
+    public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
 
-    public void Initialize(Stage stage)
+    public void Initialize(int size)
     {
-        float size = (1F - spacing * (stage.Size - 1)) / stage.Size;
-        grid.cellSize = new Vector2(size, size);
+        float cellSize = (1F - spacing * (size - 1)) / size;
+        grid.cellSize = new Vector2(cellSize, cellSize);
         grid.spacing = new Vector2(spacing, spacing);
-        slots = new Transform[stage.Size, stage.Size];
+        slots = new Transform[size, size];
 
-        for (int i = 0; i < stage.Size * stage.Size; i++)
+        for (int i = 0; i < size * size; i++)
         {
             var slot = Instantiate(slotPrefab, grid.transform).transform;
             slot.localScale = grid.cellSize;
-            slots[i % stage.Size, i / stage.Size] = slot;
+            slots[i % size, i / size] = slot;
         }
     }
 }

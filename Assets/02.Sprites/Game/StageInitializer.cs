@@ -12,7 +12,7 @@ public class StageInitializer : MonoBehaviour
     private void Awake()
     {
         var currentStage = stages[Stage.Current];
-        grid.Initialize(currentStage);
-        currentStage.Initialize(grid);
+        grid.Initialize(currentStage.Size);
+        currentStage.Initialize(grid.Transform);
     }
 }

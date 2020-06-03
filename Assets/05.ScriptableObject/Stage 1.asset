@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 5
   exit: {x: 4, y: 2}
-  red:
-    prefab: {fileID: 4033445656697829079, guid: 4daafe841d9fdff408989b375117536e,
+  cars:
+  - prefab: {fileID: 4033445656697829079, guid: 4daafe841d9fdff408989b375117536e,
       type: 3}
     coordinate: {x: 0, y: 2}
     length: 2
     axis: 0
-  others:
   - prefab: {fileID: 73132651082107787, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
     coordinate: {x: 0, y: 4}
     length: 2

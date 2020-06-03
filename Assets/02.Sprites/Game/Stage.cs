@@ -11,32 +11,29 @@ public class Stage : ScriptableObject
     [SerializeField]
     private Vector2Int exit;
     [SerializeField]
-    private LongObj red;
-    [SerializeField]
-    private LongObj[] others;
+    private LongObj[] cars;
     [SerializeField]
     private Obj[] hearts;
 
     public static int Current { get; set; }
     public int Size => size;
 
-    public void Initialize(CarGrid grid)
+    public void Initialize(Func<Vector2Int, Transform> transform)
     {
-        Spawn(red, grid);
-        foreach (var other in others)
+        foreach (var car in cars)
         {
-            Spawn(other, grid);
+            Spawn(car, transform);
         }
         foreach (var heart in hearts)
         {
-            Spawn(heart, grid);
+            Spawn(heart, transform);
         }
     }
 
-    private void Spawn(Obj obj, CarGrid grid)
+    private void Spawn(Obj obj, Func<Vector2Int, Transform> transform)
     {
         var objTransform = obj.Spawn().transform;
-        objTransform.SetParent(grid[obj.Coordinate], false);
+        objTransform.SetParent(transform?.Invoke(obj.Coordinate), false);
     }
 
     [Serializable]
