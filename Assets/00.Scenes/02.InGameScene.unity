@@ -213,8 +213,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 933052605}
-  - component: {fileID: 933052607}
-  - component: {fileID: 933052608}
   - component: {fileID: 933052606}
   m_Layer: 0
   m_Name: Grid
@@ -266,35 +264,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &933052607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 933052604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a37abac09f33549bcc0b8193f2c8eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grid: {fileID: 933052606}
-  spacing: 0.005
-  slotPrefab: {fileID: 2515546960440847679, guid: 7dde78e2d9e57004fb4c03f376d96ac5,
-    type: 3}
---- !u!114 &933052608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 933052604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac4760537efa9e24ea30f3a9b3256396, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grid: {fileID: 933052607}
 --- !u!1 &1090607608
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +354,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1588727593}
+  - component: {fileID: 1588727595}
   - component: {fileID: 1588727594}
   m_Layer: 0
   m_Name: Stage
@@ -418,11 +388,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1588727592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801ae587e8fa1aa4b89a2c7543350af6, type: 3}
+  m_Script: {fileID: 11500000, guid: ac4760537efa9e24ea30f3a9b3256396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 1588727595}
+  minDragDistance: 100
+--- !u!114 &1588727595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588727592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6940c5e88abdbc4f9ee707eb30a8fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 933052606}
+  spacing: 0.005
+  slotPrefab: {fileID: 2515546960440847679, guid: 7dde78e2d9e57004fb4c03f376d96ac5,
+    type: 3}
   stages:
   - {fileID: 11400000, guid: ae1c89cbc956119449a998e83aef8461, type: 2}
   - {fileID: 11400000, guid: 26a8c76d8a9ade343a50c05d0770fe37, type: 2}
   - {fileID: 11400000, guid: 52255494d84268145822efc360ecbb3e, type: 2}
-  grid: {fileID: 933052607}

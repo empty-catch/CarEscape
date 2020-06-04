@@ -4,9 +4,7 @@ using DG.Tweening;
 public class CarController : MonoBehaviour
 {
     [SerializeField]
-    private CarGrid grid;
-    [SerializeField]
-    private float minDragDistance;
+    private StageGrid grid;
 
     private Car controllingCar;
     private Vector2 touchDownPosition;
@@ -22,8 +20,8 @@ public class CarController : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0) && controllingCar != null)
         {
-            var diffrence = ((Vector2)Input.mousePosition - touchDownPosition).normalized;
-            var direction = diffrence.ToDirection();
+            var diffrence = ((Vector2)Input.mousePosition - touchDownPosition);
+            var direction = diffrence.normalized.ToDirection();
 
             if (controllingCar.TryTranslate(direction, out var coordinate))
             {

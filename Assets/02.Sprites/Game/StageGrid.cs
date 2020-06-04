@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(GridLayoutGroup))]
-public class CarGrid : MonoBehaviour
+public class StageGrid : MonoBehaviour
 {
     [SerializeField]
     private GridLayoutGroup grid;
@@ -13,11 +12,18 @@ public class CarGrid : MonoBehaviour
     private float spacing;
     [SerializeField]
     private GameObject slotPrefab;
+    [SerializeField]
+    private Stage[] stages;
 
     private Transform[,] slots;
     private Dictionary<Vector2Int, IGridObject> dictionary = new Dictionary<Vector2Int, IGridObject>();
 
     public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
+
+    public bool TryTranslateCar(Vector2Int previous, Vector2Int current)
+    {
+        return true;
+    }
 
     public void Initialize(int size)
     {
@@ -32,5 +38,12 @@ public class CarGrid : MonoBehaviour
             slot.localScale = grid.cellSize;
             slots[i % size, i / size] = slot;
         }
+    }
+
+    private void Awake()
+    {
+        var currentStage = stages[Stage.Current];
+        Initialize(currentStage.Size);
+        currentStage.Initialize((gridObject, coordinate) => { gridObject.SetParent(Transform(coordinate), false); });
     }
 }
