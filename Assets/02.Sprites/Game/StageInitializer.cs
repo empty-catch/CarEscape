@@ -13,6 +13,6 @@ public class StageInitializer : MonoBehaviour
     {
         var currentStage = stages[Stage.Current];
         grid.Initialize(currentStage.Size);
-        currentStage.Initialize(grid.Transform);
+        currentStage.Initialize(grid.SetGridObject);
     }
 }

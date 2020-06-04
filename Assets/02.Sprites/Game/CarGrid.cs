@@ -1,5 +1,6 @@
 #pragma warning disable CS0649
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,14 @@ public class CarGrid : MonoBehaviour
     private float spacing;
     [SerializeField]
     private GameObject slotPrefab;
-    private Transform[,] slots;
 
-    public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
+    private Transform[,] slots;
+    private Dictionary<Vector2Int, IGridObject> dictionary = new Dictionary<Vector2Int, IGridObject>();
+
+    public void SetGridObject(Transform gridObject, Vector2Int coordinate)
+    {
+        gridObject.SetParent(slots[coordinate.x, coordinate.y], false);
+    }
 
     public void Initialize(int size)
     {

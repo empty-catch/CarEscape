@@ -11,59 +11,51 @@ public class Stage : ScriptableObject
     [SerializeField]
     private Vector2Int exit;
     [SerializeField]
-    private LongObj[] cars;
+    private CarInfo[] cars;
     [SerializeField]
-    private Obj[] hearts;
+    private HeartInfo[] hearts;
 
     public static int Current { get; set; }
     public int Size => size;
 
-    public void Initialize(Func<Vector2Int, Transform> transform)
+    public void Initialize(Action<Transform, Vector2Int> setGridObject)
     {
         foreach (var car in cars)
         {
-            Spawn(car, transform);
+            Spawn(car, setGridObject);
         }
         foreach (var heart in hearts)
         {
-            Spawn(heart, transform);
+            Spawn(heart, setGridObject);
         }
     }
 
-    private void Spawn(Obj obj, Func<Vector2Int, Transform> transform)
+    private void Spawn(CarInfo info, Action<Transform, Vector2Int> setGridObject)
     {
-        var objTransform = obj.Spawn().transform;
-        objTransform.SetParent(transform?.Invoke(obj.Coordinate), false);
+        float rotation = info.axis == RectTransform.Axis.Horizontal ? 0F : 90F;
+        var car = Instantiate(info.prefab, Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
+        setGridObject?.Invoke(car.transform, info.coordinate);
     }
 
-    [Serializable]
-    private class Obj
+    private void Spawn(HeartInfo info, Action<Transform, Vector2Int> setGridObject)
     {
-        [SerializeField]
-        protected GameObject prefab;
-        [SerializeField]
-        private Vector2Int coordinate;
-
-        public Vector2Int Coordinate => coordinate;
-
-        public virtual GameObject Spawn()
-        {
-            return Instantiate(prefab);
-        }
+        var heart = Instantiate(info.prefab).transform;
+        setGridObject?.Invoke(heart, info.coordinate);
     }
 
     [Serializable]
-    private class LongObj : Obj
+    private struct HeartInfo
     {
-        [SerializeField]
-        private int length;
-        [SerializeField]
-        private RectTransform.Axis axis;
+        public Heart prefab;
+        public Vector2Int coordinate;
+    }
 
-        public override GameObject Spawn()
-        {
-            float rotation = axis == RectTransform.Axis.Horizontal ? 0F : 90F;
-            return Instantiate(prefab, Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
-        }
+    [Serializable]
+    private struct CarInfo
+    {
+        public Car prefab;
+        public Vector2Int coordinate;
+        public int length;
+        public RectTransform.Axis axis;
     }
 }
