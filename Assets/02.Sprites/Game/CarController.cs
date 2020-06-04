@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class CarController : MonoBehaviour
 {
@@ -26,7 +27,9 @@ public class CarController : MonoBehaviour
 
             if (controllingCar.TryTranslate(direction, out var coordinate))
             {
-                controllingCar.transform.SetParent(grid.Transform(coordinate), false);
+                var transform = grid.Transform(coordinate);
+                controllingCar.transform.SetParent(transform, true);
+                controllingCar.transform.DOMove(transform.position, 0.2F);
             }
         }
     }

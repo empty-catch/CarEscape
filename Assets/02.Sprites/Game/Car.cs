@@ -29,9 +29,4 @@ public class Car : MonoBehaviour, IGridObject
         this.length = length;
         this.axis = axis;
     }
-
-    public void Execute(Action action)
-    {
-
-    }
 }
