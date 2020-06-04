@@ -39,7 +39,12 @@ public class StageGrid : MonoBehaviour
 
             if (canMove && car.TryMove(direction, Transform(target)))
             {
-                // TODO: target에 하트가 있으면 에러 발생
+                if (objects.TryGetValue(target, out var gridObject) && gridObject is Heart)
+                {
+                    Heart.Count++;
+                    Destroy(gridObject.gameObject, 0.2F);
+                    objects.Remove(target);
+                }
                 objects.Add(target, car);
                 objects.Remove(current);
                 return true;
