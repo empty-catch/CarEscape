@@ -26,7 +26,7 @@ public class CarController : MonoBehaviour
 
             if (direction != Vector2Int.zero)
             {
-                grid.TryMoveCar(car.Coordinate, direction);
+                grid.TryMoveCar(car.Info.coordinate, direction);
             }
         }
     }

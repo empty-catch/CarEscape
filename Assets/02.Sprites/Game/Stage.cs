@@ -13,9 +13,7 @@ public class Stage : ScriptableObject
     [SerializeField]
     private Vector2Int exit;
     [SerializeField]
-    private CarInfo[] cars;
-    [SerializeField]
-    private HeartInfo[] hearts;
+    private Car.Information[] cars;
 
     public static int Current { get; set; }
     public static int Size { get; private set; }
@@ -29,45 +27,26 @@ public class Stage : ScriptableObject
         Exit = exit;
     }
 
-    public void SpawnObjects(Action<GridObject, Vector2Int> setGridObject)
+    public void SpawnObjects(Heart heartPrefab, Car[] carPrefabs, Action<GridObject, Vector2Int> setGridObject, Func<Vector2Int> randomCoord)
     {
         foreach (var car in cars)
         {
-            Spawn(car, setGridObject);
+            Spawn(car, carPrefabs, setGridObject);
         }
-        foreach (var heart in hearts)
-        {
-            Spawn(heart, setGridObject);
-        }
+        Spawn(heartPrefab, setGridObject, randomCoord);
     }
 
-    private void Spawn(CarInfo info, Action<GridObject, Vector2Int> setGridObject)
+    private void Spawn(Car.Information info, Car[] carPrefabs, Action<GridObject, Vector2Int> setGridObject)
     {
         float rotation = info.axis == Axis.Horizontal ? 0F : 90F;
-        var car = Instantiate(info.prefab, Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
+        var car = Instantiate(carPrefabs[(int)info.type], Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
         setGridObject?.Invoke(car, info.coordinate);
-        car.Initialize(info.coordinate, info.length, info.axis);
+        car.Info = info;
     }
 
-    private void Spawn(HeartInfo info, Action<GridObject, Vector2Int> setGridObject)
+    private void Spawn(Heart heartPrefab, Action<GridObject, Vector2Int> setGridObject, Func<Vector2Int> randomCoord)
     {
-        var heart = Instantiate(info.prefab);
-        setGridObject?.Invoke(heart, info.coordinate);
-    }
-
-    [Serializable]
-    private struct HeartInfo
-    {
-        public Heart prefab;
-        public Vector2Int coordinate;
-    }
-
-    [Serializable]
-    private struct CarInfo
-    {
-        public Car prefab;
-        public Vector2Int coordinate;
-        public int length;
-        public Axis axis;
+        var heart = Instantiate(heartPrefab);
+        setGridObject?.Invoke(heart, randomCoord?.Invoke() ?? Vector2Int.zero);
     }
 }

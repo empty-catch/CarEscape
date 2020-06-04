@@ -16,28 +16,23 @@ MonoBehaviour:
   longestCarLength: 2
   exit: {x: 4, y: 2}
   cars:
-  - prefab: {fileID: 8307373927733456151, guid: 4daafe841d9fdff408989b375117536e,
-      type: 3}
-    coordinate: {x: 0, y: 2}
+  - coordinate: {x: 0, y: 2}
     length: 2
     axis: 0
-  - prefab: {fileID: 558939353357378221, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 0, y: 4}
+    type: 0
+  - coordinate: {x: 0, y: 4}
     length: 2
     axis: 0
-  - prefab: {fileID: 558939353357378221, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 2, y: 1}
+    type: 1
+  - coordinate: {x: 2, y: 1}
     length: 2
     axis: 1
-  - prefab: {fileID: 558939353357378221, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 3, y: 1}
+    type: 1
+  - coordinate: {x: 3, y: 1}
     length: 2
     axis: 0
-  - prefab: {fileID: 558939353357378221, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 4, y: 2}
+    type: 1
+  - coordinate: {x: 4, y: 3}
     length: 2
     axis: 1
-  hearts:
-  - prefab: {fileID: 6877461511282239604, guid: c74c7cd45ce1e174ca6bce51e4d640f4,
-      type: 3}
-    coordinate: {x: 2, y: 0}
+    type: 1

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class StageGrid : MonoBehaviour
 {
@@ -13,31 +15,24 @@ public class StageGrid : MonoBehaviour
     private float spacing;
     [SerializeField]
     private GameObject slotPrefab;
-    [SerializeField]
-    private Stage[] stages;
 
     private Transform[,] slots;
     private Dictionary<Vector2Int, GridObject> objects = new Dictionary<Vector2Int, GridObject>();
 
     public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
 
+    public Vector2Int RandomCoordinate()
+    {
+        return new Vector2Int(2, 0);
+    }
+
     public bool TryMoveCar(Vector2Int current, Vector2Int direction)
     {
         if (objects[current] is Car car)
         {
             var target = current + direction;
-            var inOfRange = target.x >= 0 && target.y >= 0 &&
-                (car.Axis == Axis.Horizontal ? target.x + car.Length : target.x) <= Stage.Size &&
-                (car.Axis == Axis.Vertical ? target.y + car.Length : target.y) <= Stage.Size;
-            var canMove = inOfRange;
-
-            for (int i = 0; i < car.Length && canMove; i++)
-            {
-                var checkDir = car.Axis == Axis.Horizontal ? Vector2Int.right : Vector2Int.up;
-                canMove = IsEmpty(target + checkDir * i, car);
-            }
-
-            if (canMove && car.TryMove(direction, Transform(target)))
+            var isExit = target == Stage.Exit;
+            if ((isExit || CanMove(target, car)) && car.TryMove(direction, Transform(target)))
             {
                 if (objects.TryGetValue(target, out var gridObject) && gridObject is Heart)
                 {
@@ -47,27 +42,25 @@ public class StageGrid : MonoBehaviour
                 }
                 objects.Add(target, car);
                 objects.Remove(current);
+
+                if (isExit && car.Info.type == Car.Type.Red)
+                {
+                    PlayerPrefs.SetInt($"Stage{Stage.Current}Clear", 1);
+                    DOVirtual.DelayedCall(0.2F, () => SceneManager.LoadScene("01.StageSelectScene"));
+                }
                 return true;
             }
         }
         return false;
     }
 
-    private void Awake()
+    public void SetGridObject(GridObject gridObject, Vector2Int coordinate)
     {
-        Action<GridObject, Vector2Int> setGridObject = (gridObject, coordinate) =>
-        {
-            gridObject.transform.SetParent(Transform(coordinate), false);
-            objects[coordinate] = gridObject;
-        };
-
-        var currentStage = stages[Stage.Current];
-        currentStage.Initialize();
-        Initialize();
-        currentStage.SpawnObjects(setGridObject);
+        gridObject.transform.SetParent(Transform(coordinate), false);
+        objects[coordinate] = gridObject;
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         float cellSize = (1F - spacing * (Stage.Size - 1)) / Stage.Size;
         grid.cellSize = new Vector2(cellSize, cellSize);
@@ -82,6 +75,22 @@ public class StageGrid : MonoBehaviour
         }
     }
 
+    private bool CanMove(Vector2Int coordinate, Car car)
+    {
+        var inOfRange = coordinate.x >= 0 && coordinate.y >= 0 && coordinate.x < Stage.Size && coordinate.y < Stage.Size;
+        var carInOfRange = inOfRange &&
+            (car.Info.axis == Axis.Horizontal ? coordinate.x + car.Info.length : coordinate.x) <= Stage.Size &&
+            (car.Info.axis == Axis.Vertical ? coordinate.y + car.Info.length : coordinate.y) <= Stage.Size;
+        var canMove = carInOfRange;
+
+        for (int i = 0; i < car.Info.length && canMove; i++)
+        {
+            var checkDir = car.Info.axis == Axis.Horizontal ? Vector2Int.right : Vector2Int.up;
+            canMove = IsEmpty(coordinate + checkDir * i, car);
+        }
+        return canMove;
+    }
+
     private bool IsEmpty(Vector2Int coordinate, Car exception)
     {
         bool IsEmpty(Vector2Int direction)
@@ -91,7 +100,7 @@ public class StageGrid : MonoBehaviour
                 var checkCoord = coordinate + direction * i;
                 if (checkCoord.x >= 0 && checkCoord.y >= 0 && checkCoord.x < Stage.Size && checkCoord.y < Stage.Size &&
                     objects.ContainsKey(checkCoord) && objects[checkCoord] is Car car && car != exception &&
-                    car.Length > i && car.Axis == (direction == Vector2Int.left ? Axis.Horizontal : Axis.Vertical))
+                    car.Info.length > i && car.Info.axis == (direction == Vector2Int.left ? Axis.Horizontal : Axis.Vertical))
                 {
                     return false;
                 }

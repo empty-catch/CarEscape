@@ -1,15 +1,11 @@
+using System;
 using UnityEngine;
 using DG.Tweening;
 
 public class Car : GridObject
 {
-    private Vector2Int coordinate;
-    private int length;
-    private Axis axis;
-
-    public Vector2Int Coordinate => coordinate;
-    public int Length => length;
-    public Axis Axis => axis;
+    private Information info;
+    public Information Info { get => info; set => info = value; }
 
     public bool TryMove(Vector2Int direction, Transform slot)
     {
@@ -17,7 +13,7 @@ public class Car : GridObject
         if (canMove || Heart.Count > 0)
         {
             Heart.Count = canMove ? Heart.Count : Heart.Count - 1;
-            Move(direction);
+            info.Move(direction);
             transform.SetParent(slot, true);
             transform.DOMove(slot.position, 0.2F);
             return true;
@@ -27,20 +23,27 @@ public class Car : GridObject
 
     private bool CanMove(Vector2Int direction)
     {
-        var matchWhenHorizontal = axis == Axis.Horizontal && direction.y == 0;
-        var matchWhenVertical = axis == Axis.Vertical && direction.x == 0;
+        var matchWhenHorizontal = Info.axis == Axis.Horizontal && direction.y == 0;
+        var matchWhenVertical = Info.axis == Axis.Vertical && direction.x == 0;
         return matchWhenHorizontal || matchWhenVertical;
     }
 
-    private void Move(Vector2Int direction)
+    [Serializable]
+    public struct Information
     {
-        this.coordinate += direction;
+        public Vector2Int coordinate;
+        public int length;
+        public Axis axis;
+        public Type type;
+
+        public void Move(Vector2Int direction)
+        {
+            coordinate += direction;
+        }
     }
 
-    public void Initialize(Vector2Int coordinate, int length, Axis axis)
+    public enum Type
     {
-        this.coordinate = coordinate;
-        this.length = length;
-        this.axis = axis;
+        Red, Blue, Green
     }
 }
