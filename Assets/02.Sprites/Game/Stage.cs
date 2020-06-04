@@ -18,7 +18,7 @@ public class Stage : ScriptableObject
     public static int Current { get; set; }
     public int Size => size;
 
-    public void Initialize(Action<Transform, Vector2Int> setGridObject)
+    public void Initialize(Action<GridObject, Vector2Int> setGridObject)
     {
         foreach (var car in cars)
         {
@@ -30,17 +30,17 @@ public class Stage : ScriptableObject
         }
     }
 
-    private void Spawn(CarInfo info, Action<Transform, Vector2Int> setGridObject)
+    private void Spawn(CarInfo info, Action<GridObject, Vector2Int> setGridObject)
     {
-        float rotation = info.axis == RectTransform.Axis.Horizontal ? 0F : 90F;
+        float rotation = info.axis == Axis.Horizontal ? 0F : 90F;
         var car = Instantiate(info.prefab, Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
-        setGridObject?.Invoke(car.transform, info.coordinate);
+        setGridObject?.Invoke(car, info.coordinate);
         car.Initialize(info.coordinate, info.length, info.axis);
     }
 
-    private void Spawn(HeartInfo info, Action<Transform, Vector2Int> setGridObject)
+    private void Spawn(HeartInfo info, Action<GridObject, Vector2Int> setGridObject)
     {
-        var heart = Instantiate(info.prefab).transform;
+        var heart = Instantiate(info.prefab);
         setGridObject?.Invoke(heart, info.coordinate);
     }
 
@@ -57,6 +57,6 @@ public class Stage : ScriptableObject
         public Car prefab;
         public Vector2Int coordinate;
         public int length;
-        public RectTransform.Axis axis;
+        public Axis axis;
     }
 }

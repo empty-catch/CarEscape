@@ -1,12 +1,11 @@
 using UnityEngine;
-using DG.Tweening;
 
 public class CarController : MonoBehaviour
 {
     [SerializeField]
     private StageGrid grid;
 
-    private Car controllingCar;
+    private Car car;
     private Vector2 touchDownPosition;
 
     private void Update()
@@ -16,19 +15,20 @@ public class CarController : MonoBehaviour
             touchDownPosition = Input.mousePosition;
             var touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var hit = Physics2D.Raycast(touchPosition, Vector2.zero, 0F, LayerMask.GetMask("Car"));
-            controllingCar = hit.transform?.GetComponent<Car>() ?? controllingCar;
+            car = hit.transform?.GetComponent<Car>() ?? car;
         }
-        else if (Input.GetMouseButtonUp(0) && controllingCar != null)
+        else if (Input.GetMouseButtonUp(0) && car != null)
         {
             var diffrence = ((Vector2)Input.mousePosition - touchDownPosition);
             var direction = diffrence.normalized.ToDirection();
-
-            if (controllingCar.TryTranslate(direction, out var coordinate))
-            {
-                var transform = grid.Transform(coordinate);
-                controllingCar.transform.SetParent(transform, true);
-                controllingCar.transform.DOMove(transform.position, 0.2F);
-            }
+            grid.TryMoveCar(car.Coordinate, direction);
+            // if (car.CanMove(direction))
+            // {
+            // car.Move(direction);
+            // var transform = grid.Transform(car.Coordinate + direction);
+            // car.transform.SetParent(transform, true);
+            // car.transform.DOMove(transform.position, 0.2F);
+            // }
         }
     }
 }

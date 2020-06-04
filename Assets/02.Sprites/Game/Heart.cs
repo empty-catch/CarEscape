@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Heart : MonoBehaviour, IGridObject
+public class Heart : GridObject
 {
     public static int Count { get; set; }
 }
