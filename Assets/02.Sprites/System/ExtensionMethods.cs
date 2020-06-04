@@ -11,4 +11,15 @@ public static class ExtensionMethods
         }
         return Vector2Int.RoundToInt(new Vector2(vector.x, 0F));
     }
+
+    public static IEnumerator Start(this IEnumerator coroutine, MonoBehaviour behaviour)
+    {
+        behaviour.StartCoroutine(coroutine);
+        return coroutine;
+    }
+
+    public static void Stop(this IEnumerator coroutine, MonoBehaviour behaviour)
+    {
+        behaviour.StopCoroutine(coroutine);
+    }
 }
