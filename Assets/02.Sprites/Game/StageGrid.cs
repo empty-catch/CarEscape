@@ -1,11 +1,9 @@
 #pragma warning disable CS0649
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using DG.Tweening;
+using UnityEngine.Events;
 
 public class StageGrid : MonoBehaviour
 {
@@ -15,6 +13,8 @@ public class StageGrid : MonoBehaviour
     private float spacing;
     [SerializeField]
     private GameObject slotPrefab;
+    [SerializeField]
+    private UnityEvent stageCleared;
 
     private Transform[,] slots;
     private Dictionary<Vector2Int, GridObject> objects = new Dictionary<Vector2Int, GridObject>();
@@ -45,8 +45,7 @@ public class StageGrid : MonoBehaviour
 
                 if (isExit && car.Info.type == Car.Type.Red)
                 {
-                    PlayerPrefs.SetInt($"Stage{Stage.Current}Clear", 1);
-                    DOVirtual.DelayedCall(0.2F, () => SceneManager.LoadScene("01.StageSelectScene"));
+                    stageCleared?.Invoke();
                 }
                 return true;
             }
