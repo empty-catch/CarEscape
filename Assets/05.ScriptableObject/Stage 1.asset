@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stage 1
   m_EditorClassIdentifier: 
   size: 5
+  longestCarLength: 2
   exit: {x: 4, y: 2}
   cars:
   - prefab: {fileID: 8307373927733456151, guid: 4daafe841d9fdff408989b375117536e,

@@ -1,3 +1,5 @@
+#pragma warning disable CS0649
+
 using UnityEngine;
 
 public class CarController : MonoBehaviour
@@ -21,14 +23,11 @@ public class CarController : MonoBehaviour
         {
             var diffrence = ((Vector2)Input.mousePosition - touchDownPosition);
             var direction = diffrence.normalized.ToDirection();
-            grid.TryMoveCar(car.Coordinate, direction);
-            // if (car.CanMove(direction))
-            // {
-            // car.Move(direction);
-            // var transform = grid.Transform(car.Coordinate + direction);
-            // car.transform.SetParent(transform, true);
-            // car.transform.DOMove(transform.position, 0.2F);
-            // }
+
+            if (direction != Vector2Int.zero)
+            {
+                grid.TryMoveCar(car.Coordinate, direction);
+            }
         }
     }
 }

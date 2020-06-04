@@ -9,6 +9,8 @@ public class Stage : ScriptableObject
     [SerializeField]
     private int size;
     [SerializeField]
+    private int longestCarLength;
+    [SerializeField]
     private Vector2Int exit;
     [SerializeField]
     private CarInfo[] cars;
@@ -16,9 +18,18 @@ public class Stage : ScriptableObject
     private HeartInfo[] hearts;
 
     public static int Current { get; set; }
-    public int Size => size;
+    public static int Size { get; private set; }
+    public static int LongestCarLength { get; private set; }
+    public static Vector2Int Exit { get; private set; }
 
-    public void Initialize(Action<GridObject, Vector2Int> setGridObject)
+    public void Initialize()
+    {
+        Size = size;
+        LongestCarLength = longestCarLength;
+        Exit = exit;
+    }
+
+    public void SpawnObjects(Action<GridObject, Vector2Int> setGridObject)
     {
         foreach (var car in cars)
         {
