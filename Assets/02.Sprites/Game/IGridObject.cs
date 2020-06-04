@@ -1,4 +1,6 @@
+using System;
+
 public interface IGridObject
 {
-    void Execute();
+    void Execute(Action action);
 }

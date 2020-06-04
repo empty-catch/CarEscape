@@ -35,6 +35,7 @@ public class Stage : ScriptableObject
         float rotation = info.axis == RectTransform.Axis.Horizontal ? 0F : 90F;
         var car = Instantiate(info.prefab, Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
         setGridObject?.Invoke(car.transform, info.coordinate);
+        car.Initialize(info.coordinate, info.length, info.axis);
     }
 
     private void Spawn(HeartInfo info, Action<Transform, Vector2Int> setGridObject)

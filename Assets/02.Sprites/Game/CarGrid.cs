@@ -17,10 +17,7 @@ public class CarGrid : MonoBehaviour
     private Transform[,] slots;
     private Dictionary<Vector2Int, IGridObject> dictionary = new Dictionary<Vector2Int, IGridObject>();
 
-    public void SetGridObject(Transform gridObject, Vector2Int coordinate)
-    {
-        gridObject.SetParent(slots[coordinate.x, coordinate.y], false);
-    }
+    public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
 
     public void Initialize(int size)
     {
