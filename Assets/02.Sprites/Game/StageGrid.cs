@@ -26,7 +26,14 @@ public class StageGrid : MonoBehaviour
 
     public Vector2Int RandomCoordinate()
     {
-        return new Vector2Int(2, 0);
+        var result = Vector2Int.zero;
+        do
+        {
+            int x = UnityEngine.Random.Range(0, Stage.Size);
+            int y = UnityEngine.Random.Range(0, Stage.Size);
+            result = new Vector2Int(x, y);
+        } while (objects.ContainsKey(result));
+        return result;
     }
 
     public bool TryMoveCar(Vector2Int current, Vector2Int direction)
