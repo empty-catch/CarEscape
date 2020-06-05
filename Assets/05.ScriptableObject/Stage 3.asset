@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 9
   longestCarLength: 2
-  exit: {x: 8, y: 2}
+  exit: {x: 8, y: 4}
   exitOffset: {x: 0.5, y: 0}
   cars:
   - coordinate: {x: 0, y: 2}

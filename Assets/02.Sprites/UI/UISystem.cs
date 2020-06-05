@@ -28,7 +28,7 @@ public class UISystem : MonoBehaviour
         {
             if (Stage.AllCleared)
             {
-                // 엔딩 보여주기
+                SceneManager.LoadScene("03.EndingScene");
             }
             else if (Stage.Current == 3)
             {
