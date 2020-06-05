@@ -27,5 +27,7 @@ public class StageInitializer : MonoBehaviour
         exit.transform.localPosition = Stage.ExitOffset;
         exit.color = Color.red;
         exit.sortingOrder = -5;
+
+        Heart.Count = 0;
     }
 }
