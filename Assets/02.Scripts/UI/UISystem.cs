@@ -28,11 +28,12 @@ public class UISystem : MonoBehaviour
         timer.IsPaused = true;
         DOVirtual.DelayedCall(0.4F, () =>
         {
-            if (Stage.AllCleared)
+            if (Stage.AllCleared && PlayerPrefs.GetInt("SawEnding", 0) == 0)
             {
+                PlayerPrefs.SetInt("SawEnding", 1);
                 SceneManager.LoadScene("03.EndingScene");
             }
-            else if (Stage.Current == 3)
+            else if (Stage.Current == 2)
             {
                 finalStageElapsed.text = timer.Elapsed;
                 finalStageCleared.SetActive(true);
@@ -68,6 +69,6 @@ public class UISystem : MonoBehaviour
 
     private void Awake()
     {
-        stageNumber.text = (Stage.Current + 1).ToString();
+        stageNumber.text = $"STAGE {(Stage.Current + 1).ToString()}";
     }
 }
