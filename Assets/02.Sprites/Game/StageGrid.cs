@@ -32,7 +32,7 @@ public class StageGrid : MonoBehaviour
             int x = UnityEngine.Random.Range(0, Stage.Size);
             int y = UnityEngine.Random.Range(0, Stage.Size);
             result = new Vector2Int(x, y);
-        } while (objects.ContainsKey(result));
+        } while (!IsEmpty(result, null));
         return result;
     }
 
