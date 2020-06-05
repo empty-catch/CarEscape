@@ -54,6 +54,11 @@ public class Stage : ScriptableObject
         var car = Instantiate(carPrefabs[(int)info.type], Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
         car.Info = info;
         setGridObject?.Invoke(car, info.coordinate);
+
+        if (info.axis == Axis.Vertical)
+        {
+            car.transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
+        }
     }
 
     private void Spawn(Heart heartPrefab, Action<GridObject, Vector2Int> setGridObject, Func<Vector2Int> randomCoord)
