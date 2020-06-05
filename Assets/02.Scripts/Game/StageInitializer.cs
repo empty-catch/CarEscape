@@ -25,7 +25,7 @@ public class StageInitializer : MonoBehaviour
         var exit = Instantiate(slotPrefab).GetComponent<SpriteRenderer>();
         exit.transform.SetParent(grid.Transform(Stage.Exit), false);
         exit.transform.localPosition = Stage.ExitOffset;
-        exit.color = Color.red;
+        exit.color = new Color32(200, 40, 8, 255);
         exit.sortingOrder = -5;
 
         Heart.Count = 0;
