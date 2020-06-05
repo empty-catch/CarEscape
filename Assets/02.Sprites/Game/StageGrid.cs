@@ -44,13 +44,6 @@ public class StageGrid : MonoBehaviour
             var isExit = target == Stage.Exit;
             if ((isExit || CanMove(target, car)) && car.TryMove(direction, Transform(target), updateHeart))
             {
-                if (objects.TryGetValue(target, out var gridObject) && gridObject is Heart)
-                {
-                    Heart.Count++;
-                    updateHeart?.Invoke();
-                    Destroy(gridObject.gameObject, 0.2F);
-                    objects.Remove(target);
-                }
                 objects.Add(target, car);
                 objects.Remove(current);
 
@@ -97,7 +90,16 @@ public class StageGrid : MonoBehaviour
         for (int i = 0; i < car.Info.length && canMove; i++)
         {
             var checkDir = car.Info.axis == Axis.Horizontal ? Vector2Int.right : Vector2Int.up;
-            canMove = IsEmpty(coordinate + checkDir * i, car);
+            var checkPos = coordinate + checkDir * i;
+            canMove = IsEmpty(checkPos, car);
+
+            if (objects.TryGetValue(checkPos, out var gridObject) && gridObject is Heart)
+            {
+                Heart.Count++;
+                updateHeart?.Invoke();
+                Destroy(gridObject.gameObject, 0.2F);
+                objects.Remove(checkPos);
+            }
         }
         return canMove;
     }
