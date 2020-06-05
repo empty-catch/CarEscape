@@ -13,31 +13,26 @@ MonoBehaviour:
   m_Name: Stage 3
   m_EditorClassIdentifier: 
   size: 9
-  exit: {x: 4, y: 2}
-  red:
-    prefab: {fileID: 4033445656697829079, guid: 4daafe841d9fdff408989b375117536e,
-      type: 3}
-    coordinate: {x: 0, y: 0}
+  longestCarLength: 2
+  exit: {x: 8, y: 2}
+  cars:
+  - coordinate: {x: 0, y: 2}
     length: 2
     axis: 0
-  others:
-  - prefab: {fileID: 73132651082107787, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 0, y: 0}
+    type: 0
+  - coordinate: {x: 0, y: 4}
     length: 2
     axis: 0
-  - prefab: {fileID: 73132651082107787, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 0, y: 0}
+    type: 1
+  - coordinate: {x: 2, y: 1}
     length: 2
     axis: 1
-  - prefab: {fileID: 73132651082107787, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 0, y: 0}
-    length: 2
-    axis: 1
-  - prefab: {fileID: 73132651082107787, guid: 3c66ebe204bd3f449a5b5b9cbc4db35e, type: 3}
-    coordinate: {x: 0, y: 0}
+    type: 1
+  - coordinate: {x: 3, y: 1}
     length: 2
     axis: 0
-  hearts:
-  - prefab: {fileID: 7054051146665229756, guid: c74c7cd45ce1e174ca6bce51e4d640f4,
-      type: 3}
-    coordinate: {x: 0, y: 0}
+    type: 1
+  - coordinate: {x: 4, y: 3}
+    length: 2
+    axis: 1
+    type: 1
