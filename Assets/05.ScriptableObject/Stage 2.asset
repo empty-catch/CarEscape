@@ -17,23 +17,23 @@ MonoBehaviour:
   exit: {x: 6, y: 3}
   exitOffset: {x: 0.5, y: 0}
   cars:
-  - coordinate: {x: 0, y: 2}
+  - coordinate: {x: 0, y: 3}
     length: 2
     axis: 0
     type: 0
-  - coordinate: {x: 0, y: 4}
+  - coordinate: {x: 0, y: 5}
     length: 2
     axis: 0
     type: 1
-  - coordinate: {x: 2, y: 1}
+  - coordinate: {x: 2, y: 2}
     length: 2
     axis: 1
     type: 1
-  - coordinate: {x: 3, y: 1}
+  - coordinate: {x: 3, y: 2}
     length: 2
     axis: 0
     type: 1
-  - coordinate: {x: 4, y: 3}
+  - coordinate: {x: 4, y: 4}
     length: 2
     axis: 1
     type: 1
