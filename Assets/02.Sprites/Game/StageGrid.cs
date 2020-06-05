@@ -1,5 +1,6 @@
 #pragma warning disable CS0649
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ public class StageGrid : MonoBehaviour
     private float spacing;
     [SerializeField]
     private GameObject slotPrefab;
+    [SerializeField]
+    private UnityEvent updateHeart;
     [SerializeField]
     private UnityEvent stageCleared;
 
@@ -32,11 +35,12 @@ public class StageGrid : MonoBehaviour
         {
             var target = current + direction;
             var isExit = target == Stage.Exit;
-            if ((isExit || CanMove(target, car)) && car.TryMove(direction, Transform(target)))
+            if ((isExit || CanMove(target, car)) && car.TryMove(direction, Transform(target), updateHeart))
             {
                 if (objects.TryGetValue(target, out var gridObject) && gridObject is Heart)
                 {
                     Heart.Count++;
+                    updateHeart?.Invoke();
                     Destroy(gridObject.gameObject, 0.2F);
                     objects.Remove(target);
                 }

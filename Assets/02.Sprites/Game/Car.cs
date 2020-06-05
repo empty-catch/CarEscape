@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using DG.Tweening;
 
 public class Car : GridObject
@@ -7,12 +8,16 @@ public class Car : GridObject
     private Information info;
     public Information Info { get => info; set => info = value; }
 
-    public bool TryMove(Vector2Int direction, Transform slot)
+    public bool TryMove(Vector2Int direction, Transform slot, UnityEvent updateHeart)
     {
         var canMove = CanMove(direction);
         if (canMove || Heart.Count > 0)
         {
-            Heart.Count = canMove ? Heart.Count : Heart.Count - 1;
+            if (!canMove)
+            {
+                Heart.Count--;
+                updateHeart?.Invoke();
+            }
             info.Move(direction);
             transform.SetParent(slot, true);
             transform.DOMove(slot.position, 0.2F);
