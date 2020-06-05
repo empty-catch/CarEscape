@@ -30,7 +30,7 @@ public class UISystem : MonoBehaviour
             {
                 SceneManager.LoadScene("03.EndingScene");
             }
-            else if (Stage.Current == 3)
+            else if (Stage.Current == 2)
             {
                 finalStageElapsed.text = timer.Elapsed;
                 finalStageCleared.SetActive(true);
