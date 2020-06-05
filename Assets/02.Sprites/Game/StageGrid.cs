@@ -42,7 +42,8 @@ public class StageGrid : MonoBehaviour
         {
             var target = current + direction;
             var isExit = target == Stage.Exit;
-            if ((isExit || CanMove(target, car)) && car.TryMove(direction, Transform(target), updateHeart))
+
+            if ((CanMove(target, car) || isExit) && car.TryMove(direction, Transform(target), updateHeart))
             {
                 objects.Add(target, car);
                 objects.Remove(current);
