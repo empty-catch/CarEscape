@@ -1,3 +1,5 @@
+#pragma warning disable CS0649
+
 using System.Collections;
 using System;
 using System.Diagnostics;
@@ -12,7 +14,7 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private Text text;
     [SerializeField]
-    private BoolEvent paused;
+    private BoolEvent toggledPause;
     [SerializeField]
     private UnityEvent elapsed;
 
@@ -21,21 +23,31 @@ public class Timer : MonoBehaviour
     private TimeSpan total;
     private Stopwatch stopwatch = new Stopwatch();
 
+    public string Elapsed => stopwatch.Elapsed.ToString(@"m\:ss\:ff");
+    public bool IsPaused
+    {
+        get => isPaused;
+        set
+        {
+            isPaused = value;
+            toggledPause?.Invoke(value);
+
+            if (value)
+            {
+                stopwatch.Stop();
+                measure?.Stop(this);
+            }
+            else
+            {
+                stopwatch.Start();
+                measure?.Start(this);
+            }
+        }
+    }
+
     public void TogglePause()
     {
-        isPaused = !isPaused;
-        paused?.Invoke(isPaused);
-
-        if (isPaused)
-        {
-            stopwatch.Stop();
-            measure?.Stop(this);
-        }
-        else
-        {
-            stopwatch.Start();
-            measure?.Start(this);
-        }
+        IsPaused = !IsPaused;
     }
 
     private void Awake()

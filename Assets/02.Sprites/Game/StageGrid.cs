@@ -1,5 +1,6 @@
 #pragma warning disable CS0649
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,18 +13,27 @@ public class StageGrid : MonoBehaviour
     [SerializeField]
     private float spacing;
     [SerializeField]
-    private GameObject slotPrefab;
+    private UnityEvent updateHeart;
     [SerializeField]
     private UnityEvent stageCleared;
 
+    private GameObject slotPrefab;
     private Transform[,] slots;
     private Dictionary<Vector2Int, GridObject> objects = new Dictionary<Vector2Int, GridObject>();
 
+    public Axis RedAxis { get; private set; }
     public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
 
     public Vector2Int RandomCoordinate()
     {
-        return new Vector2Int(2, 0);
+        var result = Vector2Int.zero;
+        do
+        {
+            int x = UnityEngine.Random.Range(0, Stage.Size);
+            int y = UnityEngine.Random.Range(0, Stage.Size);
+            result = new Vector2Int(x, y);
+        } while (!IsEmpty(result, null));
+        return result;
     }
 
     public bool TryMoveCar(Vector2Int current, Vector2Int direction)
@@ -32,19 +42,15 @@ public class StageGrid : MonoBehaviour
         {
             var target = current + direction;
             var isExit = target == Stage.Exit;
-            if ((isExit || CanMove(target, car)) && car.TryMove(direction, Transform(target)))
+
+            if ((CanMove(target, car) || isExit) && car.TryMove(direction, Transform(target), updateHeart))
             {
-                if (objects.TryGetValue(target, out var gridObject) && gridObject is Heart)
-                {
-                    Heart.Count++;
-                    Destroy(gridObject.gameObject, 0.2F);
-                    objects.Remove(target);
-                }
                 objects.Add(target, car);
                 objects.Remove(current);
 
                 if (isExit && car.Info.type == Car.Type.Red)
                 {
+                    Stage.Clear();
                     stageCleared?.Invoke();
                 }
                 return true;
@@ -57,11 +63,18 @@ public class StageGrid : MonoBehaviour
     {
         gridObject.transform.SetParent(Transform(coordinate), false);
         objects[coordinate] = gridObject;
+
+        if (gridObject is Car car && car.Info.type == Car.Type.Red)
+        {
+            RedAxis = car.Info.axis;
+        }
     }
 
-    public void Initialize()
+    public void Initialize(GameObject slotPrefab)
     {
+        this.slotPrefab = slotPrefab;
         float cellSize = (1F - spacing * (Stage.Size - 1)) / Stage.Size;
+
         grid.cellSize = new Vector2(cellSize, cellSize);
         grid.spacing = new Vector2(spacing, spacing);
         slots = new Transform[Stage.Size, Stage.Size];
@@ -85,7 +98,16 @@ public class StageGrid : MonoBehaviour
         for (int i = 0; i < car.Info.length && canMove; i++)
         {
             var checkDir = car.Info.axis == Axis.Horizontal ? Vector2Int.right : Vector2Int.up;
-            canMove = IsEmpty(coordinate + checkDir * i, car);
+            var checkPos = coordinate + checkDir * i;
+            canMove = IsEmpty(checkPos, car);
+
+            if (objects.TryGetValue(checkPos, out var gridObject) && gridObject is Heart)
+            {
+                Heart.Count++;
+                updateHeart?.Invoke();
+                Destroy(gridObject.gameObject, 0.2F);
+                objects.Remove(checkPos);
+            }
         }
         return canMove;
     }
