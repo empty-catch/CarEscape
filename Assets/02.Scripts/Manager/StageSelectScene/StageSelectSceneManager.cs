@@ -8,5 +8,9 @@ public class StageSelectSceneManager : MonoBehaviour
     public void GameStart(int index){
         Stage.Current = index;
         SceneManager.LoadScene("02.InGameScene");
-    }    
+    }
+
+    public void GoHome(){
+        SceneManager.LoadScene("00.StartScene");
+    }
 }

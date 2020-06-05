@@ -22,6 +22,8 @@ public class UISystem : MonoBehaviour
     private GameObject finalStageCleared;
     [SerializeField]
     private Text finalStageElapsed;
+    [SerializeField]
+    private GameObject askEnding;
 
     public void StageCleared()
     {
@@ -31,7 +33,7 @@ public class UISystem : MonoBehaviour
             if (Stage.AllCleared && PlayerPrefs.GetInt("SawEnding", 0) == 0)
             {
                 PlayerPrefs.SetInt("SawEnding", 1);
-                SceneManager.LoadScene("03.EndingScene");
+                askEnding.SetActive(true);
             }
             else if (Stage.Current == 2)
             {
