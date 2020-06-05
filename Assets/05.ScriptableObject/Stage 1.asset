@@ -15,6 +15,7 @@ MonoBehaviour:
   size: 5
   longestCarLength: 2
   exit: {x: 4, y: 2}
+  exitOffset: {x: 0.5, y: 0}
   cars:
   - coordinate: {x: 0, y: 2}
     length: 2

@@ -2,6 +2,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [CreateAssetMenu(fileName = "Stage", menuName = "Scriptable Object/Stage")]
 public class Stage : ScriptableObject
@@ -13,6 +14,8 @@ public class Stage : ScriptableObject
     [SerializeField]
     private Vector2Int exit;
     [SerializeField]
+    private Vector2 exitOffset;
+    [SerializeField]
     private Car.Information[] cars;
 
     public static bool AllCleared => Cleared == 0b0111;
@@ -21,6 +24,7 @@ public class Stage : ScriptableObject
     public static int Size { get; private set; }
     public static int LongestCarLength { get; private set; }
     public static Vector2Int Exit { get; private set; }
+    public static Vector2 ExitOffset { get; private set; }
 
     public static void Clear()
     {
@@ -32,6 +36,7 @@ public class Stage : ScriptableObject
         Size = size;
         LongestCarLength = longestCarLength;
         Exit = exit;
+        ExitOffset = exitOffset;
     }
 
     public void SpawnObjects(Heart heartPrefab, Car[] carPrefabs, Action<GridObject, Vector2Int> setGridObject, Func<Vector2Int> randomCoord)
@@ -47,8 +52,8 @@ public class Stage : ScriptableObject
     {
         float rotation = info.axis == Axis.Horizontal ? 0F : 90F;
         var car = Instantiate(carPrefabs[(int)info.type], Vector3.zero, Quaternion.Euler(0F, 0F, rotation));
-        setGridObject?.Invoke(car, info.coordinate);
         car.Info = info;
+        setGridObject?.Invoke(car, info.coordinate);
     }
 
     private void Spawn(Heart heartPrefab, Action<GridObject, Vector2Int> setGridObject, Func<Vector2Int> randomCoord)

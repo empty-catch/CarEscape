@@ -13,15 +13,15 @@ public class StageGrid : MonoBehaviour
     [SerializeField]
     private float spacing;
     [SerializeField]
-    private GameObject slotPrefab;
-    [SerializeField]
     private UnityEvent updateHeart;
     [SerializeField]
     private UnityEvent stageCleared;
 
+    private GameObject slotPrefab;
     private Transform[,] slots;
     private Dictionary<Vector2Int, GridObject> objects = new Dictionary<Vector2Int, GridObject>();
 
+    public Axis RedAxis { get; private set; }
     public Transform Transform(Vector2Int coordinate) => slots[coordinate.x, coordinate.y];
 
     public Vector2Int RandomCoordinate()
@@ -63,11 +63,18 @@ public class StageGrid : MonoBehaviour
     {
         gridObject.transform.SetParent(Transform(coordinate), false);
         objects[coordinate] = gridObject;
+
+        if (gridObject is Car car && car.Info.type == Car.Type.Red)
+        {
+            RedAxis = car.Info.axis;
+        }
     }
 
-    public void Initialize()
+    public void Initialize(GameObject slotPrefab)
     {
+        this.slotPrefab = slotPrefab;
         float cellSize = (1F - spacing * (Stage.Size - 1)) / Stage.Size;
+
         grid.cellSize = new Vector2(cellSize, cellSize);
         grid.spacing = new Vector2(spacing, spacing);
         slots = new Transform[Stage.Size, Stage.Size];

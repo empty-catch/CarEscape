@@ -7,6 +7,8 @@ public class StageInitializer : MonoBehaviour
     [SerializeField]
     private StageGrid grid;
     [SerializeField]
+    private GameObject slotPrefab;
+    [SerializeField]
     private Heart heartPrefab;
     [SerializeField]
     private Car[] carPrefabs;
@@ -17,7 +19,13 @@ public class StageInitializer : MonoBehaviour
     {
         var currentStage = stages[Stage.Current];
         currentStage.Initialize();
-        grid.Initialize();
+        grid.Initialize(slotPrefab);
         currentStage.SpawnObjects(heartPrefab, carPrefabs, grid.SetGridObject, grid.RandomCoordinate);
+
+        var exit = Instantiate(slotPrefab).GetComponent<SpriteRenderer>();
+        exit.transform.SetParent(grid.Transform(Stage.Exit), false);
+        exit.transform.localPosition = Stage.ExitOffset;
+        exit.color = Color.red;
+        exit.sortingOrder = -5;
     }
 }
