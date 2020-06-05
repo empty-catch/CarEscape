@@ -23,7 +23,7 @@ public class Timer : MonoBehaviour
     private TimeSpan total;
     private Stopwatch stopwatch = new Stopwatch();
 
-    public TimeSpan Elapsed => stopwatch.Elapsed;
+    public string Elapsed => stopwatch.Elapsed.ToString(@"m\:ss\:ff");
     public bool IsPaused
     {
         get => isPaused;
