@@ -9,6 +9,8 @@ using DG.Tweening;
 public class UISystem : MonoBehaviour
 {
     [SerializeField]
+    private Text stageNumber;
+    [SerializeField]
     private Text heartCount;
     [SerializeField]
     private Timer timer;
@@ -62,5 +64,10 @@ public class UISystem : MonoBehaviour
     public void UpdateHeart()
     {
         heartCount.text = Heart.Count.ToString();
+    }
+
+    private void Awake()
+    {
+        stageNumber.text = (Stage.Current + 1).ToString();
     }
 }

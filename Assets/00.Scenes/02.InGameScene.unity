@@ -2397,6 +2397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ed7575469f1214eb603084753a95d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageNumber: {fileID: 1221870132}
   heartCount: {fileID: 932394849}
   timer: {fileID: 78759483}
   continueStage: {fileID: 703271737}
@@ -3709,9 +3710,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'STAGE
-
-    1'
+  m_Text: STAGE
 --- !u!222 &1547106129
 CanvasRenderer:
   m_ObjectHideFlags: 0
