@@ -15,10 +15,17 @@ public class Stage : ScriptableObject
     [SerializeField]
     private Car.Information[] cars;
 
+    public static bool AllCleared => Cleared == 0b0111;
+    public static int Cleared => PlayerPrefs.GetInt("StageCleared", 0b0000);
     public static int Current { get; set; }
     public static int Size { get; private set; }
     public static int LongestCarLength { get; private set; }
     public static Vector2Int Exit { get; private set; }
+
+    public static void Clear()
+    {
+        PlayerPrefs.SetInt("StageCleared", Cleared | 1 << Current);
+    }
 
     public void Initialize()
     {

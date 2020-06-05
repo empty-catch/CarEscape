@@ -12,8 +12,7 @@ public class UISystem : MonoBehaviour
 
     public void StageCleared()
     {
-        PlayerPrefs.SetInt($"Stage{Stage.Current}Clear", 1);
-        DOVirtual.DelayedCall(0.2F, () => SceneManager.LoadScene("01.StageSelectScene"));
+        DOVirtual.DelayedCall(0.2F, () => LoadScene("01.StageSelectScene"));
     }
 
     public void LoadScene(string name)

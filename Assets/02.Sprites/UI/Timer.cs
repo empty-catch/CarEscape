@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private Text text;
     [SerializeField]
-    private BoolEvent paused;
+    private BoolEvent toggledPause;
     [SerializeField]
     private UnityEvent elapsed;
 
@@ -23,13 +23,14 @@ public class Timer : MonoBehaviour
     private TimeSpan total;
     private Stopwatch stopwatch = new Stopwatch();
 
+    public TimeSpan Elapsed => stopwatch.Elapsed;
     public bool IsPaused
     {
         get => isPaused;
         set
         {
             isPaused = value;
-            paused?.Invoke(value);
+            toggledPause?.Invoke(value);
 
             if (value)
             {

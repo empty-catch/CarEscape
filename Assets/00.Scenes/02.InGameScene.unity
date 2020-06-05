@@ -308,7 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minute: 3
   text: {fileID: 2101169627}
-  paused:
+  toggledPause:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1588727594}

@@ -49,6 +49,7 @@ public class StageGrid : MonoBehaviour
 
                 if (isExit && car.Info.type == Car.Type.Red)
                 {
+                    Stage.Clear();
                     stageCleared?.Invoke();
                 }
                 return true;
