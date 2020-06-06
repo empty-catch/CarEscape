@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage 3
   m_EditorClassIdentifier: 
   size: 9
-  longestCarLength: 2
+  longestCarLength: 3
   exit: {x: 8, y: 4}
   exitOffset: {x: 0.5, y: 0}
   cars:
@@ -58,11 +58,11 @@ MonoBehaviour:
     axis: 0
     type: 1
   - coordinate: {x: 2, y: 6}
-    length: 2
+    length: 3
     axis: 1
     type: 2
   - coordinate: {x: 5, y: 2}
-    length: 2
+    length: 3
     axis: 1
     type: 2
   - coordinate: {x: 6, y: 5}
