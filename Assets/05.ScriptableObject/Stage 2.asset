@@ -37,3 +37,15 @@ MonoBehaviour:
     length: 2
     axis: 1
     type: 1
+  - coordinate: {x: 4, y: 6}
+    length: 2
+    axis: 0
+    type: 1
+  - coordinate: {x: 2, y: 4}
+    length: 2
+    axis: 1
+    type: 1
+  - coordinate: {x: 5, y: 3}
+    length: 2
+    axis: 1
+    type: 1
