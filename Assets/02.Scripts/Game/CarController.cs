@@ -41,7 +41,7 @@ public class CarController : MonoBehaviour
                 touchDownPosition = Input.mousePosition;
                 var touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var hit = Physics2D.Raycast(touchPosition, Vector2.zero, 0F, LayerMask.GetMask("Car"));
-                car = hit.transform?.GetComponent<Car>() ?? car;
+                car = hit.transform?.GetComponent<Car>() ?? null;
             }
             else if (Input.GetMouseButtonUp(0) && car != null)
             {
